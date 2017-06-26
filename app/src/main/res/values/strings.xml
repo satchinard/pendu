@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Pendu</string>
+    <string name="message_1">Poteau apprêté</string>
+    <string name="message_2">Poteau apprêté</string>
+    <string name="message_3">Poteau apprêté</string>
+    <string name="message_4">Poteau apprêté</string>
+    <string name="message_5">Poteau apprêté</string>
+    <string name="message_6">Poteau apprêté</string>
+    <string name="message_7">Poteau apprêté</string>
+    <string name="message_8">Poteau apprêté</string>
+    <string name="nombre_cache">Nombre caché</string>
+    <string name="nombre_saisi">Nombre</string>
+    <string name="info_nombre_cache">Guide</string>
+    <string name="btn_valider">Valider</string>
+    <string name="btn_initialiser">Initialiser</string>
+    <string name="nombre_essais">Nombre d\'éssais</string>
+</resources>
