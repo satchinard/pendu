@@ -1,13 +1,15 @@
 package test.adn.org.pendu;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,9 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.Random;
 
+import test.adn.org.pendu.db.JeuxDb;
+import test.adn.org.pendu.dbhelper.JeuxDbHelper;
 import test.adn.org.pendu.params.PenduConsts;
+import test.adn.org.pendu.utils.DateUtils;
+
+import static test.adn.org.pendu.params.PenduConsts.JEU_JOUEUR_EMAIL;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            emailJoueur = savedInstanceState.getString(PenduConsts.JEU_JOUEUR_EMAIL);
+            emailJoueur = savedInstanceState.getString(JEU_JOUEUR_EMAIL);
             pseudoJoueur = savedInstanceState.getString(PenduConsts.JEU_JOUEUR_PSEUDO);
             niveauJeu = savedInstanceState.getString(PenduConsts.JEU_NIVEAU_JEU);
             sonActif = savedInstanceState.getBoolean(PenduConsts.JEU_JOUER_SON);
@@ -49,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            emailJoueur = bundle.getString(PenduConsts.JEU_JOUEUR_EMAIL);
+            emailJoueur = bundle.getString(JEU_JOUEUR_EMAIL);
             pseudoJoueur = bundle.getString(PenduConsts.JEU_JOUEUR_PSEUDO);
             niveauJeu = bundle.getString(PenduConsts.JEU_NIVEAU_JEU);
             sonActif = bundle.getBoolean(PenduConsts.JEU_JOUER_SON);
@@ -68,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(PenduConsts.JEU_DERNIERE_SAISIE, nombreSaisi);
         outState.putInt(PenduConsts.JEU_NOMBRE_ESSAIS, nombreEssais);
         outState.putString(PenduConsts.JEU_JOUEUR_PSEUDO, pseudoJoueur);
-        outState.putString(PenduConsts.JEU_JOUEUR_EMAIL, emailJoueur);
+        outState.putString(JEU_JOUEUR_EMAIL, emailJoueur);
         outState.putString(PenduConsts.JEU_NIVEAU_JEU, niveauJeu);
         outState.putBoolean(PenduConsts.JEU_JOUER_SON, sonActif);
         outState.putBoolean(PenduConsts.JEU_VIBRER_PHONE, vibreurActif);
@@ -82,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         nombreEssais = savedInstanceState.getInt(PenduConsts.JEU_NOMBRE_ESSAIS);
         nombreCache = savedInstanceState.getInt(PenduConsts.JEU_NOMBRE_CACHE);
         nombreSaisi = savedInstanceState.getInt(PenduConsts.JEU_DERNIERE_SAISIE);
-        emailJoueur = savedInstanceState.getString(PenduConsts.JEU_JOUEUR_EMAIL);
+        emailJoueur = savedInstanceState.getString(JEU_JOUEUR_EMAIL);
         pseudoJoueur = savedInstanceState.getString(PenduConsts.JEU_JOUEUR_PSEUDO);
         niveauJeu = savedInstanceState.getString(PenduConsts.JEU_NIVEAU_JEU);
         sonActif = savedInstanceState.getBoolean(PenduConsts.JEU_JOUER_SON);
@@ -96,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
         nombreCache = 0;
         niveauPendaison = 0;
         bonneSaisie = false;
-        ((LinearLayout) findViewById(R.id.resultat)).setVisibility(LinearLayout.INVISIBLE);
-        ((Button) findViewById(R.id.btn_valider)).setEnabled(true);
+        findViewById(R.id.resultat).setVisibility(LinearLayout.INVISIBLE);
+        findViewById(R.id.btn_valider).setEnabled(true);
         ((TextView) findViewById(R.id.txt_guide)).setText("");
         ((EditText) findViewById(R.id.txt_nombre_saisi)).setText("");
         choixNombreCache();
@@ -124,7 +132,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void verifieNombre(View view) {
 
-        nombreSaisi = (int) Integer.valueOf(((EditText) findViewById(R.id.txt_nombre_saisi))
+        if (((EditText) findViewById(R.id.txt_nombre_saisi)).getText().toString().length() == 0) {
+            ((EditText) findViewById(R.id.txt_nombre_saisi)).setError("Obligatoire");
+            return;
+        }
+        nombreSaisi = Integer.valueOf(((EditText) findViewById(R.id.txt_nombre_saisi))
                 .getText().toString());
         nombreEssais++;
 
@@ -140,16 +152,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (bonneSaisie) {
             afficheResultat(view);
-            ((Button) findViewById(R.id.btn_valider)).setEnabled(false);
+            findViewById(R.id.btn_valider).setEnabled(false);
         } else {
             if (niveauPendaison >= 8 && (niveauJeu.equals(PenduConsts.JEU_NIVEAU_DEBUTANT)
                     || niveauJeu.equals(PenduConsts.JEU_NIVEAU_NORMAL))) {
                 afficheResultat(view);
-                ((Button) findViewById(R.id.btn_valider)).setEnabled(false);
+                findViewById(R.id.btn_valider).setEnabled(false);
             }
             if (niveauPendaison >= 11 && niveauJeu.equals(PenduConsts.JEU_NIVEAU_EXPERT)) {
                 afficheResultat(view);
-                ((Button) findViewById(R.id.btn_valider)).setEnabled(false);
+                findViewById(R.id.btn_valider).setEnabled(false);
             }
         }
         ((EditText) findViewById(R.id.txt_nombre_saisi)).setText("");
@@ -230,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                     imageView.setImageResource(R.drawable.pendu_11);
                     break;
                 default:
-                    imageView.setImageResource(R.drawable.pendu_0);
+                    imageView.setImageResource(R.drawable.pendu_00);
                     break;
             }
         }
@@ -257,12 +269,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void effetsSurPhone() {
-        long vibrationDuration ;
-        Uri ringUri ;
-        if (bonneSaisie){
+        long vibrationDuration;
+        Uri ringUri;
+        if (bonneSaisie) {
             vibrationDuration = 500;
             ringUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        } else{
+        } else {
             vibrationDuration = 250;
             ringUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         }
@@ -270,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             v.vibrate(vibrationDuration);
         }
-        if (sonActif){
+        if (sonActif) {
             try {
                 Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), ringUri);
                 r.play();
@@ -289,8 +301,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void afficheResultat(View view) {
-        ((LinearLayout) findViewById(R.id.resultat)).setVisibility(LinearLayout.VISIBLE);
+        findViewById(R.id.resultat).setVisibility(LinearLayout.VISIBLE);
         ((TextView) findViewById(R.id.txt_res_essais)).setText(String.valueOf(nombreEssais));
         ((TextView) findViewById(R.id.txt_res_cache)).setText(String.valueOf(nombreCache));
+        saveGameDatas();
+    }
+
+    public void saveGameDatas() {
+        JeuxDbHelper jeuxDbHelper = new JeuxDbHelper(getApplicationContext());
+        SQLiteDatabase db = jeuxDbHelper.getWritableDatabase();
+
+//        SQLiteDatabase db = openOrCreateDatabase(jeuxDbHelper.getDatabaseName(),
+//                SQLiteDatabase.CREATE_IF_NECESSARY, null);
+
+        ContentValues values = new ContentValues();
+        values.put(JeuxDb.ScoreJeux.COLUMN_NAME_EMAIL, emailJoueur);
+        values.put(JeuxDb.ScoreJeux.COLUMN_NAME_PSEUDO, pseudoJoueur);
+        values.put(JeuxDb.ScoreJeux.COLUMN_NAME_NIVEAU, niveauJeu);
+        values.put(JeuxDb.ScoreJeux.COLUMN_NAME_SCORE, nombreEssais);
+        values.put(JeuxDb.ScoreJeux.COLUMN_NAME_REUSSITE, bonneSaisie);
+        values.put(JeuxDb.ScoreJeux.COLUMN_NAME_DATE, DateUtils.dateHistorique(new Date(), null));
+
+        long newRowId = db.insert(JeuxDb.ScoreJeux.TABLE_NAME, null, values);
+
+        if (db.isOpen())
+            db.close();
     }
 }

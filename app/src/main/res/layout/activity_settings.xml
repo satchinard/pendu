@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -69,8 +68,8 @@
                     android:id="@+id/rd_debutant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onNiveauButtonClicked"
                     android:checked="true"
+                    android:onClick="onNiveauButtonClicked"
                     android:text="@string/rd_debutant" />
 
                 <RadioButton
@@ -139,8 +138,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="onGuideChecked"
-                android:checked="true" />
+                android:checked="true"
+                android:onClick="onGuideChecked" />
 
         </TableRow>
 
@@ -165,6 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
+                android:onClick="showScores"
                 android:text="@string/txt_meilleurs_scores" />
 
         </TableRow>
