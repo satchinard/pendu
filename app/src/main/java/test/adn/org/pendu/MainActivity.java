@@ -255,18 +255,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void afficheGuide(View view) {
+        String message = "";
         TextView textView = (TextView) findViewById(R.id.txt_guide);
         if (nombreSaisi < nombreCache) {
-            textView.setText(String.valueOf(nombreSaisi) + R.string.txt_est_inferieur);
+            message = String.valueOf(nombreSaisi) + " " + getResources().getString(R.string.txt_est_inferieur);
+            textView.setText(message);
             bonneSaisie = false;
         }
         if (nombreSaisi > nombreCache) {
-            textView.setText(String.valueOf(nombreSaisi) + R.string.txt_est_superieur);
+            message = String.valueOf(nombreSaisi) + " " + getResources().getString(R.string.txt_est_superieur);
+            textView.setText(message);
             bonneSaisie = false;
         }
         if (nombreSaisi == nombreCache) {
             textView.setText(R.string.txt_trouve);
-            Toast.makeText(getApplicationContext(), R.string.txt_bravo_vous_avez_trouve, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.txt_bravo_vous_avez_trouve), Toast.LENGTH_LONG).show();
             Button button = ((Button) findViewById(R.id.btn_valider));
             button.setEnabled(false);
             bonneSaisie = true;
