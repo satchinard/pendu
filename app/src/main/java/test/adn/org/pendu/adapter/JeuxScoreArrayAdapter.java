@@ -27,7 +27,7 @@ public class JeuxScoreArrayAdapter extends ArrayAdapter<Jeux> {
     private final ArrayList<Jeux> values;
 
     public JeuxScoreArrayAdapter(Context context, ArrayList<Jeux> values) {
-        super(context, R.layout.activity_historique, values);
+        super(context, R.layout.activity_historique_item, values);
         this.context = context;
         this.values = values;
     }
@@ -123,13 +123,19 @@ public class JeuxScoreArrayAdapter extends ArrayAdapter<Jeux> {
         return jeuxList;
     }
 
+    public static void deleteAll(Context context) {
+        JeuxDbHelper jeuxDbHelper = new JeuxDbHelper(context);
+        SQLiteDatabase db = jeuxDbHelper.getReadableDatabase();
+        db.delete(JeuxDb.ScoreJeux.TABLE_NAME, null, null);
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View rowView = inflater.inflate(R.layout.activity_historique,
+        View rowView = inflater.inflate(R.layout.activity_historique_item,
                 parent, false);
 
         TextView pseudoTextView = (TextView) rowView.findViewById(R.id.txt_pseudo);
@@ -141,12 +147,19 @@ public class JeuxScoreArrayAdapter extends ArrayAdapter<Jeux> {
 
         Jeux j = values.get(position);
 
+//        Typeface pseudoTypeface = Typeface.createFromAsset(context.getAssets(),"fonts/JosefinSans-Bold.ttf");
+//        Typeface emailTypeface = Typeface.createFromAsset(context.getAssets(),"fonts/JosefinSans-SemiBoldItalic.ttf");
+//        Typeface resultatTypeface = Typeface.createFromAsset(context.getAssets(),"fonts/Quicksand-Bold.otf");
+
         pseudoTextView.setText(j.getPseudo());
+//        pseudoTextView.setTypeface(pseudoTypeface);
         emailTextView.setText(j.getEmail());
+//        emailTextView.setTypeface(emailTypeface);
         niveauTextView.setText(j.getNiveau());
         scoreTextView.setText(j.getScore());
         dateTextView.setText(j.getDate());
         resultatTextView.setText(j.getReussite());
+//        resultatTextView.setTypeface(resultatTypeface);
 
         return rowView;
     }

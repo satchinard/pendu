@@ -2,120 +2,62 @@
 
     <!-- nom de l'application -->
     <string name="app_name">Pendu</string>
+    <string name="app_name_historique">Better scores</string>
+    <string name="app_name_help">Help</string>
+    <string name="app_name_parametres">Parameters</string>
 
     <!-- page du jeu -->
-    <string name="txt_nombre_cache">Nombre caché</string>
-    <string name="edit_nombre_cache">Nombre</string>
+    <string name="txt_nombre_cache">Hidden number</string>
+    <string name="edit_nombre_cache">Number</string>
     <string name="txt_guide_jeu">Guide</string>
-    <string name="btn_valider">Valider</string>
-    <string name="btn_initialiser">Initialiser</string>
-    <string name="txt_nombre_saisis">Nombre d\'éssais</string>
+    <string name="btn_valider">Validate</string>
+    <string name="btn_initialiser">Init</string>
+    <string name="txt_nombre_saisis">Trials number</string>
 
     <!-- parametres -->
-    <string name="title_activity_parametres">Paramètres</string>
+    <string name="title_activity_parametres">Parameters</string>
     <string name="txt_email">Email</string>
     <string name="txt_pseudo">Pseudo</string>
 
-    <string name="txt_niveau_jeu">Niveau du jeu</string>
-    <string name="rd_debutant">Débutant</string>
+    <string name="txt_niveau_jeu">Game\'s level</string>
+    <string name="rd_debutant">Beginner</string>
     <string name="rd_normal">Normal</string>
     <string name="rd_expert">Expert</string>
 
-    <string name="txt_afficher_guide">Afficher guide</string>
+    <string name="txt_afficher_guide">Show guide</string>
 
-    <string name="txt_jouer_son">Jouer sons</string>
+    <string name="txt_jouer_son">Play sound</string>
 
-    <string name="txt_vibreur">Vibreur</string>
+    <string name="txt_vibreur">Vibrator</string>
 
-    <string name="switch_active">Activé</string>
-    <string name="switch_desactive">Désactivé</string>
+    <string name="switch_active">Activated</string>
+    <string name="switch_desactive">Desabled</string>
 
-    <string name="txt_jouer">Jouer</string>
-    <string name="txt_meilleurs_scores">Meilleurs scores</string>
+    <string name="txt_jouer">Play</string>
+    <string name="txt_meilleurs_scores">Better scores</string>
 
-    <!-- Strings related to Settings -->
+    <string name="lbl_guide_pendu">Pendu guide</string>
+    <string name="lbl_niveau">Level</string>
+    <string name="lbl_astuce">Soft use</string>
+    <string name="lbl_instruction">Instructions</string>
 
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
+    <string name="choix_debutant">0 to 50</string>
+    <string name="choix_normal">0 to 100</string>
+    <string name="choix_expert">0 to 1000</string>
 
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
+    <string name="lbl_guide">Your phone choose a number, and you must discover it. It behaves like you must be hang up, but discovering the number will avoid it. This number varies according to the choosen level.</string>
+    <string name="lbl_instructions">You must choose a number in the game level gap. An image is displayed at every trial showing if you discovered or not the hidden number. If discovered, a message of congratulation is displayed.</string>
+    <string name="lbl_astuces">Read the guide message carefully. It helps you determine the hidden number more quickly.</string>
+    <string name="tst_historique_supprime">Older scores delated.</string>
+    <string name="txt_trouve">Found !</string>
+    <string name="txt_est_superieur">is greater</string>
+    <string name="txt_est_inferieur">is lower</string>
+    <string name="txt_bravo_vous_avez_trouve">Congratulation ! You\'ve found it !</string>
+    <string name="txt_obligatoire">Required</string>
+    <string name="txt_tout_supprimer">Delete all</string>
+    <string name="txt_recommencer">Restart</string>
+    <string name="txt_nouvelle_partie">New game</string>
+    <string name="txt_aide">Help</string>
+    <string name="txt_quitter">Exit</string>
 
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
-
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
-    <string-array name="multi_select_list_preference_default_value" />
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
-
-    <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_login">Settings</string>
-
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
 </resources>

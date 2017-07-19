@@ -147,25 +147,13 @@
 
             <Button
                 android:id="@+id/btn_jouer"
+                style="@style/boutonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:onClick="jouer"
                 android:text="@string/txt_jouer" />
-
-        </TableRow>
-
-        <TableRow>
-
-            <Button
-                android:id="@+id/btn_meilleurs_scores"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:onClick="showScores"
-                android:text="@string/txt_meilleurs_scores" />
 
         </TableRow>
 

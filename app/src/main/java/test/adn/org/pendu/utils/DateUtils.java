@@ -12,7 +12,7 @@ public class DateUtils {
 
     public static String dateHistorique(Date date, String format) {
         if (format == null)
-            format = "dd-mm-YYYY";
+            format = "dd/MM/yyyy";
         sdf.applyPattern(format);
         return sdf.format(date);
     }

@@ -2,6 +2,7 @@ package test.adn.org.pendu;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -10,6 +11,9 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,9 +29,9 @@ import test.adn.org.pendu.db.JeuxDb;
 import test.adn.org.pendu.dbhelper.JeuxDbHelper;
 import test.adn.org.pendu.params.PenduConsts;
 import test.adn.org.pendu.utils.DateUtils;
+import test.adn.org.pendu.utils.UIHelper;
 
 import static test.adn.org.pendu.params.PenduConsts.JEU_JOUEUR_EMAIL;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean sonActif = false;
     private boolean vibreurActif = false;
     private boolean guideActif = false;
-
+    private boolean finJeu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         nombreSaisi = 0;
         nombreCache = 0;
         niveauPendaison = 0;
+        finJeu = false;
         bonneSaisie = false;
         findViewById(R.id.resultat).setVisibility(LinearLayout.INVISIBLE);
         findViewById(R.id.btn_valider).setEnabled(true);
@@ -133,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
     public void verifieNombre(View view) {
 
         if (((EditText) findViewById(R.id.txt_nombre_saisi)).getText().toString().length() == 0) {
-            ((EditText) findViewById(R.id.txt_nombre_saisi)).setError("Obligatoire");
+            ((EditText) findViewById(R.id.txt_nombre_saisi)).setError(getResources().getString(R.string.txt_obligatoire));
             return;
         }
         nombreSaisi = Integer.valueOf(((EditText) findViewById(R.id.txt_nombre_saisi))
@@ -252,16 +257,16 @@ public class MainActivity extends AppCompatActivity {
     public void afficheGuide(View view) {
         TextView textView = (TextView) findViewById(R.id.txt_guide);
         if (nombreSaisi < nombreCache) {
-            textView.setText(String.valueOf(nombreSaisi) + " est inférieur.");
+            textView.setText(String.valueOf(nombreSaisi) + R.string.txt_est_inferieur);
             bonneSaisie = false;
         }
         if (nombreSaisi > nombreCache) {
-            textView.setText(String.valueOf(nombreSaisi) + " est supérieur.");
+            textView.setText(String.valueOf(nombreSaisi) + R.string.txt_est_superieur);
             bonneSaisie = false;
         }
         if (nombreSaisi == nombreCache) {
-            textView.setText("Trouvé !");
-            Toast.makeText(getApplicationContext(), "Bravo! Vous avez trouvé.", Toast.LENGTH_LONG).show();
+            textView.setText(R.string.txt_trouve);
+            Toast.makeText(getApplicationContext(), R.string.txt_bravo_vous_avez_trouve, Toast.LENGTH_LONG).show();
             Button button = ((Button) findViewById(R.id.btn_valider));
             button.setEnabled(false);
             bonneSaisie = true;
@@ -305,14 +310,12 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.txt_res_essais)).setText(String.valueOf(nombreEssais));
         ((TextView) findViewById(R.id.txt_res_cache)).setText(String.valueOf(nombreCache));
         saveGameDatas();
+        finJeu = true;
     }
 
     public void saveGameDatas() {
         JeuxDbHelper jeuxDbHelper = new JeuxDbHelper(getApplicationContext());
         SQLiteDatabase db = jeuxDbHelper.getWritableDatabase();
-
-//        SQLiteDatabase db = openOrCreateDatabase(jeuxDbHelper.getDatabaseName(),
-//                SQLiteDatabase.CREATE_IF_NECESSARY, null);
 
         ContentValues values = new ContentValues();
         values.put(JeuxDb.ScoreJeux.COLUMN_NAME_EMAIL, emailJoueur);
@@ -326,5 +329,50 @@ public class MainActivity extends AppCompatActivity {
 
         if (db.isOpen())
             db.close();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_jeu_encours, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.mn_recommencer:
+                recommencerJeu();
+                return true;
+            case R.id.mn_nouveau:
+                initialiserJeu(null);
+                return true;
+            case R.id.mn_aide:
+                showHelp();
+                return true;
+            case R.id.mn_quitter:
+                UIHelper.killApp(true);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void recommencerJeu() {
+        if (finJeu) {
+            initialiserJeu(null);
+        } else {
+            nombreEssais = 0;
+            bonneSaisie = false;
+            niveauPendaison = 0;
+            affichePendu(null);
+        }
+    }
+
+    public void showHelp() {
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), HelpActivity.class);
+        startActivity(intent);
     }
 }

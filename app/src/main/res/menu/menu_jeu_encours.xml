@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/mn_recommencer"
+        android:title="@string/txt_recommencer"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/mn_nouveau"
+        android:title="@string/txt_nouvelle_partie"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/mn_aide"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="@string/txt_aide"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/mn_quitter"
+        android:title="@string/txt_quitter"
+        app:showAsAction="collapseActionView" />
+</menu>

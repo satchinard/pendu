@@ -3,17 +3,18 @@ package test.adn.org.pendu;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import test.adn.org.pendu.dbhelper.JeuxDbHelper;
 import test.adn.org.pendu.params.PenduConsts;
 
 import static test.adn.org.pendu.params.PenduConsts.JEU_JOUER_SON;
@@ -37,10 +38,11 @@ public class SettingsActivity extends AppCompatActivity {
                 .getSharedPreferences(PenduConsts.SHARED_PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
         emailJoueur = sharedPref.getString(getString(R.string.txt_email), "");
         pseudoJoueur = sharedPref.getString(getString(R.string.txt_pseudo), "");
+        niveauJeu = sharedPref.getString(getString(R.string.txt_niveau_jeu), "");
+
         ((EditText) findViewById(R.id.edit_pseudo)).setText(pseudoJoueur);
         ((EditText) findViewById(R.id.edit_email)).setText(emailJoueur);
 
-//        testDb();
     }
 
     @Override
@@ -56,14 +58,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void jouer(View view) {
         Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         pseudoJoueur = (((EditText) findViewById(R.id.edit_pseudo)).getText()).toString();
         emailJoueur = (((EditText) findViewById(R.id.edit_email)).getText()).toString();
         if (pseudoJoueur.trim().length() == 0) {
-            ((EditText) findViewById(R.id.edit_pseudo)).setError("Pseudo obligatoire.");
+            ((EditText) findViewById(R.id.edit_pseudo)).setError(getResources().getString(R.string.txt_obligatoire));
             return;
         }
         if (emailJoueur.trim().length() == 0) {
-            ((EditText) findViewById(R.id.edit_email)).setError("Email obligatoire.");
+            ((EditText) findViewById(R.id.edit_email)).setError(getResources().getString(R.string.txt_obligatoire));
             return;
         }
         if (pseudoJoueur.trim().length() != 0 && emailJoueur.trim().length() != 0) {
@@ -80,16 +83,16 @@ public class SettingsActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString(getString(R.string.txt_email), emailJoueur);
             editor.putString(getString(R.string.txt_pseudo), pseudoJoueur);
+            editor.putString(getString(R.string.txt_niveau_jeu), niveauJeu);
             editor.commit();
 
             startActivity(intent);
         }
     }
 
-    public void showScores(View view) {
+    public void showScores() {
         Intent intent = new Intent();
         intent.setClass(getApplicationContext(), HistoriqueActivity.class);
-//        intent.setClass(getApplicationContext(), MobileActivity.class);
         startActivity(intent);
     }
 
@@ -157,10 +160,38 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public void testDb() {
-        JeuxDbHelper jeuxDbHelper = new JeuxDbHelper(getApplicationContext());
-        SQLiteDatabase db = jeuxDbHelper.getWritableDatabase();
-        db.execSQL("insert into score(pseudo , email , score)" +
-                " VALUES ('adaro2000','adaro2000@gmail.com','8');");
+//    public void testDb() {
+//        JeuxDbHelper jeuxDbHelper = new JeuxDbHelper(getApplicationContext());
+//        SQLiteDatabase db = jeuxDbHelper.getWritableDatabase();
+//        db.execSQL("insert into score(pseudo , email , score)" +
+//                " VALUES ('adaro2000','adaro2000@gmail.com','8');");
+//    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_meilleurs_scores, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.mn_meilleurs_scores:
+                showScores();
+                return true;
+            case R.id.mn_aide:
+                showHelp();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void showHelp() {
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), HelpActivity.class);
+        startActivity(intent);
     }
 }

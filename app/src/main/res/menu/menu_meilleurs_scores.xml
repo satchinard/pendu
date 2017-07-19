@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/mn_aide"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="@string/txt_aide"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/mn_meilleurs_scores"
+        android:title="@string/txt_meilleurs_scores"
+        app:showAsAction="collapseActionView" />
+</menu>
