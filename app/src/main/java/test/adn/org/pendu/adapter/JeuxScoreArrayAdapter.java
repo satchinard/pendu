@@ -145,6 +145,10 @@ public class JeuxScoreArrayAdapter extends ArrayAdapter<Jeux> {
         TextView dateTextView = (TextView) rowView.findViewById(R.id.txt_date);
         TextView resultatTextView = (TextView) rowView.findViewById(R.id.txt_resultat);
 
+//        ImageView imageView = (ImageView) rowView.findViewById(R.id.pendu_img);
+
+//        CardView cardView = (CardView) rowView.findViewById(R.id.cardview);
+
         Jeux j = values.get(position);
 
 //        Typeface pseudoTypeface = Typeface.createFromAsset(context.getAssets(),"fonts/JosefinSans-Bold.ttf");
@@ -160,6 +164,14 @@ public class JeuxScoreArrayAdapter extends ArrayAdapter<Jeux> {
         dateTextView.setText(j.getDate());
         resultatTextView.setText(j.getReussite());
 //        resultatTextView.setTypeface(resultatTypeface);
+//        imageView.setImageResource(R.drawable.pendu_03);
+
+        int p_left = ((position % 2) == 0) ? 4 : 8;
+        int p_right = ((position % 2) == 0) ? 8 : 4;
+        int i_color = ((position % 2) == 0) ? R.color.colorHist : R.color.colorWhite;
+
+        rowView.setPadding(p_left, 8, p_right, 2);
+        rowView.setBackgroundColor(context.getResources().getColor(i_color));
 
         return rowView;
     }

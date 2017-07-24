@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:alpha="5"
+    android:padding="8dp"
+    android:paddingTop="8dp"
+    app:cardCornerRadius="5dp">
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:id="@+id/cardview"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:alpha="5dp"-->
+    <!--app:cardCornerRadius="5dp">-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_pseudo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ada"></TextView>
+                android:text="Ada"
+                android:textStyle="bold"></TextView>
 
             <TextView
                 android:id="@+id/txt_email"
@@ -41,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
@@ -64,6 +76,16 @@
 
         </LinearLayout>
 
+        <!--<ImageView android:id="@+id/pendu_img"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/pendu_11"-->
+        <!--android:layout_margin="4dp"/>-->
+
     </LinearLayout>
 
-</LinearLayout>
+    <!--</android.support.v7.widget.CardView>-->
+
+
+</android.support.v7.widget.CardView>
