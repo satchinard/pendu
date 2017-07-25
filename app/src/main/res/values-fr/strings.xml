@@ -45,4 +45,5 @@
     <string name="txt_nouvelle_partie">Nouvelle partie</string>
     <string name="txt_aide">Aide</string>
     <string name="txt_quitter">Quitter</string>
+    <string name="txt_ok">Ok</string>
 </resources>

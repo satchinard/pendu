@@ -57,7 +57,9 @@
     <string name="txt_tout_supprimer">Delete all</string>
     <string name="txt_recommencer">Restart</string>
     <string name="txt_nouvelle_partie">New game</string>
+
     <string name="txt_aide">Help</string>
     <string name="txt_quitter">Exit</string>
+    <string name="txt_ok">Ok</string>
 
 </resources>

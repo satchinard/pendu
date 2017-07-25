@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/mn_tout_supprimer"
-        android:title="Tout supprimer"
+        android:title="@string/txt_tout_supprimer"
         app:showAsAction="collapseActionView" />
 </menu>
