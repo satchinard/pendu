@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
-
-    <!--<TextView-->
-    <!--style="@style/titreStyle"-->
-    <!--android:id="@+id/txt_meilleurs_scores"-->
-    <!--android:text="@string/txt_meilleurs_scores"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content" />-->
+    android:padding="8dp"
+    android:theme="@style/Theme.AppCompat">
 
     <ListView
         android:id="@+id/lv_scores"

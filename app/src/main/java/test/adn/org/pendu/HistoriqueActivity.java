@@ -1,13 +1,14 @@
 package test.adn.org.pendu;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import test.adn.org.pendu.adapter.JeuxScoreArrayAdapter;
 
@@ -34,21 +35,21 @@ public class HistoriqueActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mn_tout_supprimer:
-                JeuxScoreArrayAdapter.deleteAll(getApplicationContext());
+                JeuxScoreArrayAdapter.deleteAll(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder
+//                        .setTitle(R.string.app_name)
+                        .setMessage(R.string.tst_historique_supprime)
+                        .setPositiveButton(R.string.txt_ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(R.drawable.ic_info_user)
+                ;
+                builder.create().show();
                 updateListView();
-//                listView.getAdapter().notify();
-//                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getApplicationContext());
-//                alertBuilder.setIcon(R.drawable.ic_info_user);
-//                alertBuilder.setTitle(R.string.app_name);
-//                alertBuilder.setMessage(R.string.tst_historique_supprime);
-//                alertBuilder.setPositiveButton(getResources().getString(R.string.txt_ok), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//                alertBuilder.show();
-                Toast.makeText(this, R.string.tst_historique_supprime, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, R.string.tst_historique_supprime, Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
