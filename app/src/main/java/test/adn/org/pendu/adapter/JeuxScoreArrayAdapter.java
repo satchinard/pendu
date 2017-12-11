@@ -16,6 +16,7 @@ import test.adn.org.pendu.R;
 import test.adn.org.pendu.db.Jeux;
 import test.adn.org.pendu.db.JeuxDb;
 import test.adn.org.pendu.dbhelper.JeuxDbHelper;
+import test.adn.org.pendu.params.PenduConsts;
 
 /**
  * Created by cagecfi on 14/07/2017.
@@ -145,10 +146,6 @@ public class JeuxScoreArrayAdapter extends ArrayAdapter<Jeux> {
         TextView dateTextView = (TextView) rowView.findViewById(R.id.txt_date);
         TextView resultatTextView = (TextView) rowView.findViewById(R.id.txt_resultat);
 
-//        ImageView imageView = (ImageView) rowView.findViewById(R.id.pendu_img);
-
-//        CardView cardView = (CardView) rowView.findViewById(R.id.cardview);
-
         Jeux j = values.get(position);
 
 //        Typeface pseudoTypeface = Typeface.createFromAsset(context.getAssets(),"fonts/JosefinSans-Bold.ttf");
@@ -159,10 +156,22 @@ public class JeuxScoreArrayAdapter extends ArrayAdapter<Jeux> {
 //        pseudoTextView.setTypeface(pseudoTypeface);
         emailTextView.setText(j.getEmail());
 //        emailTextView.setTypeface(emailTypeface);
-        niveauTextView.setText(j.getNiveau());
+
+        switch (j.getNiveau()) {
+            case PenduConsts.JEU_NIVEAU_DEBUTANT:
+                niveauTextView.setText(context.getResources().getString(R.string.choix_debutant));
+                break;
+            case PenduConsts.JEU_NIVEAU_NORMAL:
+                niveauTextView.setText(context.getResources().getString(R.string.choix_normal));
+                break;
+            case PenduConsts.JEU_NIVEAU_EXPERT:
+                niveauTextView.setText(context.getResources().getString(R.string.choix_expert));
+                break;
+        }
         scoreTextView.setText(j.getScore());
         dateTextView.setText(j.getDate());
         resultatTextView.setText(j.getReussite());
+
 //        resultatTextView.setTypeface(resultatTypeface);
 //        imageView.setImageResource(R.drawable.pendu_03);
 

@@ -2,34 +2,82 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+//    buildToolsVersion "25.0.0"
     defaultConfig {
+
         applicationId "test.adn.org.pendu"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        testApplicationId "test.adn.org.pendu.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        testHandleProfiling true
+        testFunctionalTest true
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        testBuildType "staging"
+        // Encapsulates options for running tests.
+        testOptions {
+            // Changes the directory where Gradle saves test reports. By default, Gradle saves test reports
+            // in the path_to_your_project/module_name/build/outputs/reports/ directory.
+            // '$rootDir' sets the path relative to the root directory of the current project.
+            reportDir "$rootDir/test-reports"
+            // Changes the directory where Gradle saves test results. By default, Gradle saves test results
+            // in the path_to_your_project/module_name/build/outputs/test-results/ directory.
+            // '$rootDir' sets the path relative to the root directory of the current project.
+            resultsDir "$rootDir/test-results"
+
+            // Encapsulates options for unit tests.
+            unitTests {
+                // By default, unit tests throw an exception any time the code you are testing tries to access
+                // Android platform APIs (unless you mock Android dependencies yourself or with a testing
+                // framework like Mockito). However, you can enable the following property so that the test
+                // returns either null or zero when accessing platform APIs, rather than throwing an exception.
+                returnDefaultValues true
+
+                // Encapsulates options for controlling how Gradle executes unit tests. For a list
+                // of all the options you can specify, read Gradle's reference documentation.
+                all {
+                    // Sets JVM argument(s) for the test JVM(s).
+                    jvmArgs '-XX:MaxPermSize=256m'
+
+                    // You can also check the task name to apply options to only the tests you specify.
+                    if (it.name == 'testDebug') {
+                        systemProperty 'debug', 'true'
+                    }
+
+//                    if (it.name == 'connectedDebugAndroidTest') {
+//                    }
+
+                }
+
+
+                vectorDrawables.useSupportLibrary = true
+            }
+            buildTypes {
+                release {
+                    minifyEnabled false
+                    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                }
+            }
         }
     }
-}
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:25.4.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.android.support:support-v4:25.4.0'
-    implementation 'com.android.support:support-vector-drawable:25.4.0'
-    implementation 'com.android.support:design:25.4.0'
-    implementation 'com.android.support:cardview-v7:25.4.0'
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+            exclude group: 'com.android.support', module: 'support-annotations'
+        })
+        testImplementation 'junit:junit:4.12'
+        implementation 'com.android.support:appcompat-v7:25.4.0'
+        implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+        implementation 'com.android.support:support-v4:25.4.0'
+        implementation 'com.android.support:support-vector-drawable:25.4.0'
+        implementation 'com.android.support:design:25.4.0'
+        implementation 'com.android.support:cardview-v7:25.4.0'
+
+        androidTestCompile 'com.android.support:support-annotations:25.0.0'
+        androidTestCompile 'com.android.support.test:runner:0.5'
+    }
 }
